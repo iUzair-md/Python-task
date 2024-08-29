@@ -4,10 +4,9 @@ import { useNavigate } from 'react-router-dom';
 
 // Create an Axios instance
 const apiClient = axios.create({
-  baseURL: 'http://127.0.0.1:8000', // Replace with your backend API base URL
+  baseURL: 'http://127.0.0.1:8000', 
 });
 
-// Axios request interceptor to add the access token to headers
 apiClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('accessToken');
@@ -21,7 +20,6 @@ apiClient.interceptors.request.use(
   }
 );
 
-// Axios response interceptor to handle token expiration and refresh
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -30,18 +28,14 @@ apiClient.interceptors.response.use(
 
     if (error.response.status === 401 && error.response.data.detail === 'Token has expired') {
       try {
-        // Request a new token
         const response = await axios.post('http://127.0.0.1:8000/token');
         if (response.status === 200) {
           const newToken = response.data.access_token;
 
-          // Save the new token to localStorage
           localStorage.setItem('accessToken', newToken);
 
-          // Update the Authorization header with the new token
           originalRequest.headers['Authorization'] = `Bearer ${newToken}`;
 
-          // Retry the original request with the new token
           return apiClient(originalRequest);
         }
       } catch (refreshError) {

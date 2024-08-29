@@ -10,40 +10,33 @@ const List = () => {
   const [page, setPage] = useState(1);
   const [perPage] = useState(5);
   
-  //added
   const [sortOrder, setSortOrder] = useState("asc"); // New state for sorting order
 
   const fetchUsers = async (endpoint) => {
     try {
-    //   const response = await axios.get(url, {
-    //     headers: {
-    //       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-    //     },
-    //   });
+    
     const response = await apiClient.get(endpoint);
 
-      console.log("API Response:", response.data); // Debugging line to check API response
+      console.log("API Response:", response.data); 
       if (response.data) {
-        setUsers(response.data.users || []); // Set users to response data or an empty array
+        setUsers(response.data.users || []); 
         setNextUrl(response.data.next_url);
         setPrevUrl(response.data.prev_url);
       } else {
-        setUsers([]); // Fallback to an empty array if response data is undefined
+        setUsers([]); 
       }
     } catch (error) {
       console.error("Error fetching users:", error);
       if (error.response && error.response.status === 401) {
-        navigate("/"); // Navigate back to the home page for re-authorization
+        navigate("/"); 
       } else {
-        setUsers([]); // Fallback to an empty array in case of an error
+        setUsers([]); 
       }
     }
   };
 
   useEffect(() => {
-    // const url = `http://127.0.0.1:8000/users/?page=${page}&per_page=${perPage}`;
-    // const url = `http://127.0.0.1:8000/users/?page=${page}&per_page=${perPage}&sort_order=${sortOrder}`;
-    // fetchUsers(url);
+  
     const endpoint = `/users/?page=${page}&per_page=${perPage}&sort_order=${sortOrder}`;
     fetchUsers(endpoint);
   }, [page, perPage, sortOrder]);

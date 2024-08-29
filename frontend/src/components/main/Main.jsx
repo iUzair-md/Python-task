@@ -1,22 +1,22 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { useNavigate } from "react-router-dom"; 
 import "./main.scss";
-import axios from "axios"; // Import axios
+import axios from "axios"; 
 import apiClient from "../ApiClient";
 
 const Main = () => {
 
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate(); 
 
   const handleAuthorize = async () => {
     try {
 
       // const response = await axios.post("http://127.0.0.1:8000/token");
-      const response = await apiClient.post("/token"); // Use apiClient to fetch the token
+      const response = await apiClient.post("/token"); 
       if (response.status === 200) {
         const { access_token } = response.data;
-        localStorage.setItem("accessToken", access_token); // Store token in localStorage
-        navigate("/form"); // Navigate to form page
+        localStorage.setItem("accessToken", access_token); 
+        navigate("/form"); 
       } else {
         console.error("Failed to fetch access token");
         alert("Authorization failed. Please try again.");

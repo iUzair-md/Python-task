@@ -14,10 +14,10 @@ const Form = () => {
     number: "",
   });
 
-  const [submissionStatus, setSubmissionStatus] = useState(null); // Track submission status
+  const [submissionStatus, setSubmissionStatus] = useState(null); 
 
   const [errors, setErrors] = useState({});
-  const accessToken = localStorage.getItem("accessToken"); // Get the token from localStorage
+  const accessToken = localStorage.getItem("accessToken"); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,9 +47,7 @@ const Form = () => {
     }
     const accessToken = localStorage.getItem("accessToken"); // Get the token from localStorage
     try {
-      // const response = await axios.post(
-      //   "http://127.0.0.1:8000/users/",
-      //   {
+    
         const response = await apiClient.post(
           "/users/", // Use relative endpoint
           {
@@ -69,7 +67,6 @@ const Form = () => {
 
       if (response.status === 201) {
         console.log("User data submitted successfully");
-        // alert("User data submitted successfully");
         setSubmissionStatus("success");
         handleReset(); // Clear form data
       } else if (response.status === 401) {
@@ -110,8 +107,7 @@ const Form = () => {
   };
 
   const handleFetchList = () => {
-    // Implement the logic to fetch and display the list
-    navigate("/list"); // Navigate to form page
+    navigate("/list"); 
 
   };
 
@@ -120,65 +116,7 @@ const Form = () => {
   };
 
   return (
-    // <div className="form">
-    //   <div className="formdiv">
-    //     <form onSubmit={handleSubmit}>
-    //       <div className="username">
-    //         <input
-    //           type="text"
-    //           className={getInputClassName('name', 'firstname')}
-    //           placeholder="First Name"
-    //           name="firstname"
-    //           value={formData.firstname}
-    //           onChange={handleChange}
-    //         />
-    //         <input
-    //           type="text"
-    //           className={getInputClassName('name', 'lastname')}
-    //           placeholder="Last Name"
-    //           name="lastname"
-    //           value={formData.lastname}
-    //           onChange={handleChange}
-    //         />
-    //       </div>
-    //       <div className="address">
-    //         <textarea
-    //           name="address"
-    //           value={formData.address}
-    //           className={getInputClassName('useraddress', 'address')}
-    //           id=""
-    //           cols="30"
-    //           placeholder="Address"
-    //           rows="10"
-    //           onChange={handleChange}
-    //         ></textarea>
-    //       </div>
-    //       <div className="contact">
-    //         <input
-    //           className={getInputClassName('usercontact', 'email')}
-    //           type="email"
-    //           placeholder="email@provider.com"
-    //           name="email"
-    //           value={formData.email}
-    //           onChange={handleChange}
-    //         />
-    //         <input
-    //           type="number"
-    //           className={getInputClassName('usercontact', 'number')}
-    //           placeholder="Contact Number"
-    //           name="number"
-    //           value={formData.number}
-    //           onChange={handleChange}
-    //         />
-    //       </div>
-    //       <div className="submitdiv">
-    //         <button type="reset" onClick={handleReset}>Reset</button>
-    //         <button type="submit">Send Message</button>
-    //       </div>
-    //     </form>
-    //   </div>
-    // </div>
-
+   
     <div className="form">
     {submissionStatus === "success" ? (
       <div className="success-screen">
